@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Données de l'examen GlobalExam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+            display: inline-block;
+        }
+        .header-actions {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .download-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+        .summary-container {
+            background: #e3f2fd;
+            border-left: 5px solid #007bff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .summary-title {
+            margin-top: 0;
+            color: #0056b3;
+            font-size: 1.4em;
+        }
+        .summary-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .summary-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #b8daff;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .summary-question {
+            font-weight: bold;
+            color: #333;
+        }
+        .summary-answer {
+            color: #155724;
+            margin-top: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+        .summary-answer::before {
+            content: "↳";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .media-container {
+            margin-bottom: 15px;
+        }
+        .media-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .media-container audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .answers-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .answer-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+        .answer-item.correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+            font-weight: bold;
+        }
+        .raw-data-container {
+            margin-top: 40px;
+            background: #272822;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .raw-data-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .raw-data-header:hover {
+            background-color: #3e3f36;
+            border-radius: 4px;
+        }
+        .raw-data-title {
+            color: #fff;
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .toggle-icon {
+            font-size: 1.2em;
+            font-weight: bold;
+            user-select: none;
+        }
+        .raw-data-content {
+            display: none; /* Hidden by default */
+        }
+        .raw-data-content pre {
+            margin: 0;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-actions">
+        <h1>Données de l'examen</h1>
+        <button id="download-json" class="download-btn" style="display: none;">Télécharger JSON</button>
+    </div>
+    <div id="content">Chargement des données...</div>
+    <script src="exam_data.js"></script>
+</body>
+</html>

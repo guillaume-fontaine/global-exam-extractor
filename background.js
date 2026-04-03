@@ -4,22 +4,11 @@ function is_valid_exam_url(url) {
   return regex.test(url);
 }
 
-async function isDisabled() {
-  const data = await browser.storage.sync.get({ disable: false });
-  return data.disable;
-}
-
-async function isAutoValidateEnabled() {
-  const data = await browser.storage.sync.get({ autoValidate: false });
-  return data.autoValidate;
-}
-
 browser.webRequest.onBeforeRequest.addListener(
   async (details) => {
-    if ((await isDisabled()) || !is_valid_exam_url(details.url)) return;
+    if (!is_valid_exam_url(details.url)) return;
 
     const filter = browser.webRequest.filterResponseData(details.requestId);
-
     let chunks = [];
 
     filter.ondata = (event) => {
@@ -36,7 +25,6 @@ browser.webRequest.onBeforeRequest.addListener(
       } catch (e) {
         console.error(e);
       }
-
       filter.close();
     };
   },
@@ -44,51 +32,21 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"],
 );
 
-function click_right_answers(questions, tabs) {
-  for (const e of questions)
-    if (e.is_right_answer) click_input_by_value(e.id, tabs);
-}
-
 async function process_exam_questions(data) {
-  const tabs = await browser.tabs.query({
-    url: "https://exam.global-exam.com/*",
+  await browser.storage.local.set({ 
+    currentExamData: data 
   });
-  if (data.props.activitySettings.correction.during_activity === null) {
-    warn_toast(
-      "You need to enable the correction for the extension to work",
-      tabs,
-    );
-    return;
+  
+  const targetUrl = browser.extension.getURL("exam_data.html");
+  
+  // Check if the tab is already open
+  const tabs = await browser.tabs.query({ url: targetUrl });
+  
+  if (tabs.length > 0) {
+    // If it's open, just focus it (the content will update via storage listener)
+    await browser.tabs.update(tabs[0].id, { active: true });
+  } else {
+    // If not, create a new tab
+    await browser.tabs.create({ url: targetUrl });
   }
-  data.props.examQuestions.data.forEach(async (element) => {
-    click_right_answers(element.exam_answers, tabs);
-  });
-  if (await isAutoValidateEnabled()) click_validate(tabs);
-}
-
-function click_input_by_value(value, tabs) {
-  tabs.forEach((tab) => {
-    browser.tabs.sendMessage(tab.id, {
-      action: "clickInput",
-      value: value,
-    });
-  });
-}
-
-function warn_toast(value, tabs) {
-  tabs.forEach((tab) => {
-    browser.tabs.sendMessage(tab.id, {
-      action: "warnToast",
-      value: value,
-    });
-  });
-}
-
-function click_validate(tabs) {
-  tabs.forEach((tab) => {
-    browser.tabs.sendMessage(tab.id, {
-      action: "clickValidate",
-      value: "clickValidate",
-    });
-  });
 }

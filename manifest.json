@@ -1,8 +1,8 @@
 {
   "description": "GlobalExam Auto Responses",
   "manifest_version": 2,
-  "name": "GlobalExam Auto Responses",
-  "version": "1.2",
+  "name": "GlobalExam Extractor",
+  "version": "2.0",
 
   "permissions": [
     "storage",
@@ -11,11 +11,7 @@
     "https://exam.global-exam.com/*"
   ],
 
-  "web_accessible_resources": ["assets/public/*"],
-
-  "browser_action": {
-    "default_popup": "popup/index.html"
-  },
+  "web_accessible_resources": ["assets/public/*", "exam_data.html"],
 
   "icons": {
     "64": "assets/icon.png"
@@ -23,7 +19,7 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "@globalexam-auto-responses",
+      "id": "@globalexam-extractor",
       "data_collection_permissions": {
         "required": ["none"]
       }
@@ -32,11 +28,5 @@
 
   "background": {
     "scripts": ["background.js"]
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://exam.global-exam.com/*"],
-      "js": ["content.js", "toast.js"]
-    }
-  ]
+  }
 }

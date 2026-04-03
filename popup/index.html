@@ -2,8 +2,9 @@
 <html>
     <head>
         <link href="style.css" rel="stylesheet" />
+        <meta charset="utf-8" />
     </head>
-    <body>
+    <body style="width: 300px;">
         <h1>GlobalExam Auto Responses</h1>
 
         <input type="checkbox" id="disable" />
@@ -21,6 +22,13 @@
             title="This will probably require you to reload the page"
             >Enable debug</label
         >
+
+        <button id="show-exam-data" style="margin-top: 10px;">Afficher les données de l'examen</button>
+
+        <div id="answers-container" style="margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px;">
+            <h2 style="font-size: 16px; margin-bottom: 5px;">Réponses :</h2>
+            <ul id="answers-list" style="max-height: 250px; overflow-y: auto; padding-left: 20px; margin-top: 0; font-size: 14px;"></ul>
+        </div>
 
         <p class="source">
             <a
